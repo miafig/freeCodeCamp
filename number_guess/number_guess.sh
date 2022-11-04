@@ -12,7 +12,7 @@ GET_USER=$($PSQL "SELECT username FROM users WHERE username='$USERNAME'")
 # if doesn't exist
 if [[ -z $GET_USER ]]
 then
-  echo -e "\nWelcome, '$USERNAME'! It looks like this is your first time here."
+  echo -e "\nWelcome, $USERNAME! It looks like this is your first time here."
   # add user to table
   NUM_GAMES=1
   BEST_GAME=1000
@@ -20,7 +20,7 @@ then
 else
   NUM_GAMES=$($PSQL "SELECT num_games FROM users WHERE username='$USERNAME'")
   BEST_GAME=$($PSQL "SELECT best_game FROM users WHERE username='$USERNAME'")
-  echo -e "\nWelcome back, '$USERNAME'! You have played $NUM_GAMES games, and your best game took $BEST_GAME guesses."
+  echo -e "\nWelcome back, $USERNAME! You have played $NUM_GAMES games, and your best game took $BEST_GAME guesses."
   # update game data
   UPDATE_GAME_NUM=$($PSQL "UPDATE users SET num_games=num_games+1 WHERE username='$USERNAME'")
 fi
@@ -41,7 +41,7 @@ GET_GUESS(){
 UPDATE_GAME=$($PSQL "UPDATE current_game SET guess_num=0")
 GET_GUESS
 
-while [ $GUESS != $RANDNUM ]
+while [[ $GUESS != $RANDNUM ]]
 do
   # if input not integer
   if ! [[ $GUESS =~ ^[0-9]+$ ]]
@@ -52,7 +52,7 @@ do
   then
     GET_GUESS "It's lower than that, guess again: "
   # if higher
-  elif [[ $GUESS < $RANDNUM ]]
+  else
     GET_GUESS "It's higher than that, guess again: "
   fi
 done
